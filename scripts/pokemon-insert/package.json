@@ -1,0 +1,11 @@
+{
+  "name": "pokemon-insert",
+  "version": "1.0.0",
+  "description": "Script to insert Pokemon into MongoDB",
+  "main": "insert-pokemon.js",
+  "type": "module",
+  "dependencies": {
+    "mongodb": "^6.3.0",
+    "dotenv": "^16.3.1"
+  }
+} 
