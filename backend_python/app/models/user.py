@@ -2,6 +2,9 @@ from beanie import Document
 from pydantic import BaseModel, EmailStr
 from typing import Optional, Dict
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -22,6 +25,16 @@ class User(Document, UserBase):
     class Settings:
         name = "users"
         
+    async def insert(self, *args, **kwargs):
+        logger.debug(f"Inserting new user: {self.email}")
+        try:
+            result = await super().insert(*args, **kwargs)
+            logger.debug(f"User inserted successfully: {self.email}")
+            return result
+        except Exception as e:
+            logger.error(f"Error inserting user {self.email}: {str(e)}")
+            raise
+    
     model_config = {
         "json_schema_extra": {
             "example": {
